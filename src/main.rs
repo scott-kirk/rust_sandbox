@@ -1,25 +1,39 @@
+use std::io::{stdin};
+
 fn main() {
-    let mut counter = 0;
-    let x = loop {
-        counter += 1;
-        if counter % 11 == 0 {
-            break counter;
+    let mut buf;
+
+    let input_fahrenheit = loop {
+        buf = String::new();
+        println!("Input the unit of temperature you wish to convert");
+        stdin().read_line(&mut buf).expect("Could not read input!");
+        buf = buf.trim().to_lowercase();
+        if buf == "f" || buf == "fahrenheit" {
+            break true;
+        } else if buf == "c" || buf == "celsius" {
+            break false;
+        } else {
+            println!("Temperature unit could not be parsed, please input the unit");
+        };
+    };
+
+    let orig_temperature :f64 = loop {
+        buf = String::new();
+        println!("Input the temperature you wish to convert");
+        stdin().read_line(&mut buf).expect("Could not read input!");
+        match buf.trim().parse() {
+            Ok(num) => break num,
+            Err(_) => println!("Please input a number"),
         }
     };
-    println!("x is now {} and y is {}", x, get_y_value());
-    let mut x = x;
-    while x != 3 {
-        x -= 1;
+
+    if input_fahrenheit {
+        let new_temperature = (orig_temperature - 32.0) / 1.8;
+        println!("The temperature {} degrees Fahrenheit is {} degrees Celsius",
+                 orig_temperature, new_temperature);
+    } else {
+        let new_temperature = orig_temperature * 1.8 + 32.0;
+        println!("The temperature {} degrees Fahrenheit is {} degrees Celsius",
+                 orig_temperature, new_temperature);
     }
-    println!("x is now {}", x);
-
-    let arr = [x, 5, 4, 3, 2, 1];
-
-    for ele in arr.iter() {
-        println!("the ele is {}", ele);
-    }
-}
-
-fn get_y_value() -> i32 {
-    12
 }
