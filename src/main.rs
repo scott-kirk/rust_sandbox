@@ -1,37 +1,23 @@
-use std::io;
-use rand::Rng;
-use std::cmp::Ordering;
-
 fn main() {
-    println!("Guess the secret number!");
-    let secret_number = rand::thread_rng().gen_range(1, 101);
-
-    loop {
-        println!("Please input your guess now.");
-
-        let mut guess = String::new();
-
-        io::stdin()
-            .read_line(&mut guess)
-            .expect("Failed to read the guess");
-
-        let guess: u32 = match guess.trim().parse() {
-            Ok(num) => num,
-            Err(_) => {
-                println!("Please enter a number");
-                continue;
-            }
-        };
-
-        println!("You guessed: {}", guess);
-
-        match guess.cmp(&secret_number) {
-            Ordering::Less => println!("Too small!"),
-            Ordering::Greater => println!("Too big!"),
-            Ordering::Equal => {
-                println!("You win!");
-                break;
-            },
-        }
+    let x = {
+        let y = 4;
+        y
+    };
+    // comments are usually above the line they're referencing
+    different_function(x, get_my_float());
+    if x == 3 {
+        println!("x equaled 3!");
+    } else if x % 3 == 0 {
+        println!("x is divisible by 3!");
+    } else {
+        println!("x did not equal 3 and is not divisible by it :(");
     }
+}
+
+fn get_my_float() -> f64 {
+    0.1
+}
+
+fn different_function(x: i64, y: f64) {
+    println!("You passed in {} and {}", x, y);
 }
